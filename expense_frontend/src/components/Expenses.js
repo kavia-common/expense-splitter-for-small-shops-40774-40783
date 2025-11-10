@@ -191,8 +191,7 @@ export default function Expenses() {
 
         <div>
           <button
-            className="theme-toggle"
-            style={{ position: 'static' }}
+            className="btn"
             type="submit"
             disabled={busy}
           >

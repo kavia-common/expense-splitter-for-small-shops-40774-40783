@@ -1,12 +1,12 @@
 const DEFAULT_BASE_URL = 'http://localhost:3001';
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * Prefer process.env.REACT_APP_API_BASE_URL to override the default in different environments.
+ * Falls back to http://localhost:3001 which matches the running backend in this workspace.
+ */
 export function getBaseUrl() {
-  /**
-   * This is a public function.
-   * Returns the base URL for the backend API.
-   * It uses REACT_APP_API_BASE_URL if provided, otherwise defaults to http://localhost:3001
-   */
+  /** This is a public function. */
   return process.env.REACT_APP_API_BASE_URL || DEFAULT_BASE_URL;
 }
 
