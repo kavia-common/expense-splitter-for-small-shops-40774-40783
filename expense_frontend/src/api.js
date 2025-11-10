@@ -8,21 +8,28 @@ export function getBaseUrl() {
    * Returns the base URL for the backend API.
    *
    * Precedence:
-   * - REACT_APP_API_BASE_URL if provided (e.g., https://your-domain:3001)
+   * - REACT_APP_API_BASE if provided (e.g., https://your-domain:3001 or https://host:3001/api)
    * - If running under CRA dev server with proxy configured, use relative '/api'
    * - Fallback to http://localhost:3001
    *
-   * Note: When using the '/api' relative base, ensure the backend is served at
-   * http://localhost:3001 and that package.json has "proxy": "http://localhost:3001".
+   * Notes:
+   * - The container defines REACT_APP_API_BASE, not REACT_APP_API_BASE_URL.
+   * - When using the '/api' relative base, ensure package.json has a proxy to the backend.
    */
-  const envUrl = process.env.REACT_APP_API_BASE_URL && process.env.REACT_APP_API_BASE_URL.trim();
+  // Prefer the container-provided REACT_APP_API_BASE
+  const envUrl =
+    (process.env.REACT_APP_API_BASE && process.env.REACT_APP_API_BASE.trim()) ||
+    (process.env.REACT_APP_API_BASE_URL && process.env.REACT_APP_API_BASE_URL.trim());
   if (envUrl) {
     return envUrl;
   }
-  // Use relative base when protocol/host matches the frontend (dev proxy)
+
+  // If the frontend is served from the same origin and dev server runs on 3000, prefer proxy
   if (typeof window !== 'undefined' && window.location && window.location.port === '3000') {
     return RELATIVE_PROXY_BASE;
   }
+
+  // In preview environments, fall back to localhost backend port if nothing else provided
   return DEFAULT_BASE_URL;
 }
 
