@@ -1,13 +1,29 @@
 const DEFAULT_BASE_URL = 'http://localhost:3001';
+const RELATIVE_PROXY_BASE = '/api'; // used with CRA proxy config
 
 // PUBLIC_INTERFACE
 export function getBaseUrl() {
   /**
    * This is a public function.
    * Returns the base URL for the backend API.
-   * It uses REACT_APP_API_BASE_URL if provided, otherwise defaults to http://localhost:3001
+   *
+   * Precedence:
+   * - REACT_APP_API_BASE_URL if provided (e.g., https://your-domain:3001)
+   * - If running under CRA dev server with proxy configured, use relative '/api'
+   * - Fallback to http://localhost:3001
+   *
+   * Note: When using the '/api' relative base, ensure the backend is served at
+   * http://localhost:3001 and that package.json has "proxy": "http://localhost:3001".
    */
-  return process.env.REACT_APP_API_BASE_URL || DEFAULT_BASE_URL;
+  const envUrl = process.env.REACT_APP_API_BASE_URL && process.env.REACT_APP_API_BASE_URL.trim();
+  if (envUrl) {
+    return envUrl;
+  }
+  // Use relative base when protocol/host matches the frontend (dev proxy)
+  if (typeof window !== 'undefined' && window.location && window.location.port === '3000') {
+    return RELATIVE_PROXY_BASE;
+  }
+  return DEFAULT_BASE_URL;
 }
 
 /**
@@ -36,7 +52,8 @@ function headers() {
  */
 async function request(path, options = {}) {
   const base = getBaseUrl().replace(/\/+$/, '');
-  const url = `${base}${path}`;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  const url = `${base}${cleanPath}`;
   const res = await fetch(url, { ...options, headers: { ...headers(), ...(options.headers || {}) } });
   const data = await safeJson(res);
 
