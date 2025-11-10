@@ -21,50 +21,45 @@ function App() {
 
   return (
     <div className="App">
-      {/* Top Nav */}
-      <div className="navbar">
-        <div className="navbar-inner container">
-          <div className="brand">Expense Splitter</div>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <nav aria-label="Primary" className="tabs">
-              <button
-                onClick={() => setTab('members')}
-                className={`tab ${tab === 'members' ? 'active' : ''}`}
-              >
-                Members
-              </button>
-              <button
-                onClick={() => setTab('expenses')}
-                className={`tab ${tab === 'expenses' ? 'active' : ''}`}
-              >
-                Expenses
-              </button>
-              <button
-                onClick={() => setTab('balances')}
-                className={`tab ${tab === 'balances' ? 'active' : ''}`}
-              >
-                Balances
-              </button>
-            </nav>
-            <button
-              className="btn"
-              onClick={toggleTheme}
-              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-              title="Toggle theme"
-            >
-              {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-            </button>
-          </div>
-        </div>
-      </div>
+      <header className="App-header" style={{ paddingTop: 72 }}>
+        <button 
+          className="theme-toggle" 
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+        >
+          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+        </button>
 
-      <header className="App-header" style={{ paddingTop: 24 }}>
         <h1 style={{ marginBottom: 8 }}>Expense Splitter</h1>
         <p style={{ marginTop: 0, color: 'var(--text-secondary)' }}>
           Manage members, record expenses, and view balances.
         </p>
 
-        <main className="container" style={{ width: '100%', maxWidth: 1000 }}>
+        <nav aria-label="Primary" style={{ display: 'flex', gap: 8, marginTop: 16, marginBottom: 24 }}>
+          <button
+            onClick={() => setTab('members')}
+            className="theme-toggle"
+            style={{ position: 'static', backgroundColor: tab === 'members' ? 'var(--button-bg)' : '#6b7280' }}
+          >
+            Members
+          </button>
+          <button
+            onClick={() => setTab('expenses')}
+            className="theme-toggle"
+            style={{ position: 'static', backgroundColor: tab === 'expenses' ? 'var(--button-bg)' : '#6b7280' }}
+          >
+            Expenses
+          </button>
+          <button
+            onClick={() => setTab('balances')}
+            className="theme-toggle"
+            style={{ position: 'static', backgroundColor: tab === 'balances' ? 'var(--button-bg)' : '#6b7280' }}
+          >
+            Balances
+          </button>
+        </nav>
+
+        <main style={{ width: '100%', maxWidth: 1000 }}>
           {tab === 'members' && <Members />}
           {tab === 'expenses' && <Expenses />}
           {tab === 'balances' && <Balances />}

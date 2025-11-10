@@ -42,12 +42,11 @@
 
 .App-header {
   background-color: var(--bg-secondary);
-  min-height: calc(100vh - 56px);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-bottom: 40px;
+  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: var(--text-primary);
   transition: background-color 0.3s ease;

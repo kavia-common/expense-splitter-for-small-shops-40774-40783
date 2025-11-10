@@ -41,7 +41,7 @@ export default function Balances() {
       <h2 id="balances-heading">Balances</h2>
 
       <div style={{ marginBottom: 12 }}>
-        <button className="btn" onClick={refresh}>
+        <button className="theme-toggle" style={{ position: 'static' }} onClick={refresh}>
           Refresh
         </button>
       </div>

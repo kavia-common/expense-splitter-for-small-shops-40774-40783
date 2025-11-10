@@ -102,7 +102,8 @@ export default function Members() {
           maxLength={100}
         />
         <button
-          className="btn"
+          className="theme-toggle"
+          style={{ position: 'static' }}
           type="submit"
           disabled={busy}
         >
@@ -126,8 +127,8 @@ export default function Members() {
             <li key={m.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 12, border: '1px solid var(--border-color)', borderRadius: 8 }}>
               <span>{m.name}</span>
               <button
-                className="btn"
-                style={{ backgroundColor: '#EF4444' }}
+                className="theme-toggle"
+                style={{ position: 'static', backgroundColor: '#EF4444' }}
                 aria-label={`Delete ${m.name}`}
                 onClick={() => onDelete(m.id)}
               >
